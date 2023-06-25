@@ -20,7 +20,7 @@ export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
   currentUser: any;
   loading?: boolean;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  fetchUserInfo?: () => Promise<any | undefined>;
 }> {
   const fetchUserInfo = async () => {
     try {
