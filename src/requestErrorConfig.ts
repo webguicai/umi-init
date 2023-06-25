@@ -97,7 +97,7 @@ export const errorConfig: RequestConfig = {
         url: '/api' + url,
         headers: {
           ...config.headers,
-          Authorization,
+          Authorization: 'Bearer ' + Authorization,
         },
       };
     },
