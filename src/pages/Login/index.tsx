@@ -1,69 +1,13 @@
 import { Footer } from '@/components';
 import { UsersControllerLogin } from '@/services/system-interface/yonghujiekou';
-import {
-  AlipayCircleOutlined,
-  LockOutlined,
-  MobileOutlined,
-  TaobaoCircleOutlined,
-  UserOutlined,
-  WeiboCircleOutlined,
-} from '@ant-design/icons';
-import {
-  LoginForm,
-  ProFormText,
-} from '@ant-design/pro-components';
+import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from '@umijs/max';
+import { FormattedMessage, history, useIntl, useModel, Helmet } from '@umijs/max';
 import { Alert, message, Tabs } from 'antd';
 import Settings from '../../../config/defaultSettings';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
-
-const ActionIcons = () => {
-  const langClassName = useEmotionCss(({ token }) => {
-    return {
-      marginLeft: '8px',
-      color: 'rgba(0, 0, 0, 0.2)',
-      fontSize: '24px',
-      verticalAlign: 'middle',
-      cursor: 'pointer',
-      transition: 'color 0.3s',
-      '&:hover': {
-        color: token.colorPrimaryActive,
-      },
-    };
-  });
-
-  return (
-    <>
-      <AlipayCircleOutlined key="AlipayCircleOutlined" className={langClassName} />
-      <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={langClassName} />
-      <WeiboCircleOutlined key="WeiboCircleOutlined" className={langClassName} />
-    </>
-  );
-};
-
-const Lang = () => {
-  const langClassName = useEmotionCss(({ token }) => {
-    return {
-      width: 42,
-      height: 42,
-      lineHeight: '42px',
-      position: 'fixed',
-      right: 16,
-      borderRadius: token.borderRadius,
-      ':hover': {
-        backgroundColor: token.colorBgTextHover,
-      },
-    };
-  });
-
-  return (
-    <div className={langClassName} data-lang>
-      {SelectLang && <SelectLang />}
-    </div>
-  );
-};
 
 const LoginMessage: React.FC<{
   content: string;
@@ -116,8 +60,8 @@ const Login: React.FC = () => {
       // 登录
       const msg = await UsersControllerLogin({ ...values });
       if (msg.status === 'ok' && msg.data) {
-        localStorage.setItem('Authorization', msg.data)
-        const defaultLoginSuccessMessage = '登录成功！'
+        localStorage.setItem('Authorization', msg.data);
+        const defaultLoginSuccessMessage = '登录成功！';
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
@@ -127,7 +71,7 @@ const Login: React.FC = () => {
       // 如果失败去设置用户错误信息
       setUserLoginState(msg);
     } catch (error) {
-      const defaultLoginFailureMessage = '登录失败，请重试！'
+      const defaultLoginFailureMessage = '登录失败，请重试！';
       message.error(defaultLoginFailureMessage);
     }
   };
@@ -136,12 +80,8 @@ const Login: React.FC = () => {
   return (
     <div className={containerClassName}>
       <Helmet>
-        <title>
-          登录页
-          - {Settings.title}
-        </title>
+        <title>登录页 - {Settings.title}</title>
       </Helmet>
-      <Lang />
       <div
         style={{
           flex: '1',
@@ -155,14 +95,6 @@ const Login: React.FC = () => {
           }}
           logo={<img alt="logo" src="/logo.svg" />}
           title="Ant Design"
-          actions={[
-            <FormattedMessage
-              key="loginWith"
-              id="pages.login.loginWith"
-              defaultMessage="其他登录方式"
-            />,
-            <ActionIcons key="icons" />,
-          ]}
           onFinish={async (values) => {
             await handleSubmit(values as API.UsersControllerLoginParams);
           }}
@@ -174,19 +106,17 @@ const Login: React.FC = () => {
             items={[
               {
                 key: 'account',
-                label: '账户密码登录'
+                label: '账户密码登录',
               },
               {
                 key: 'mobile',
-                label: '手机号登录'
+                label: '手机号登录',
               },
             ]}
           />
 
           {status === 'error' && loginType === 'account' && (
-            <LoginMessage
-              content={'账户或密码错误(admin/123456)'}
-            />
+            <LoginMessage content={'账户或密码错误(admin/123456)'} />
           )}
           {type === 'account' && (
             <>
@@ -275,7 +205,7 @@ const Login: React.FC = () => {
             <a
               style={{
                 float: 'right',
-                marginBottom: 16
+                marginBottom: 16,
               }}
             >
               <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
