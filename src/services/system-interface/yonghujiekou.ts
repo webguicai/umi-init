@@ -10,7 +10,7 @@ export async function UsersControllerCreateCode(options?: { [key: string]: any }
   });
 }
 
-/** 注册 注册 POST /users/createUser */
+/** 创建用户 创建用户 POST /users/createUser */
 export async function UsersControllerCreateUser(
   body: API.CreateUserDto,
   options?: { [key: string]: any },
@@ -29,6 +29,21 @@ export async function UsersControllerCreateUser(
 export async function UsersControllerCurrentUser(options?: { [key: string]: any }) {
   return request<any>('/users/currentUser', {
     method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 删除用户 删除用户 DELETE /users/deleteUser */
+export async function UsersControllerDeleteUser(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.UsersControllerDeleteUserParams,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/users/deleteUser', {
+    method: 'DELETE',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }

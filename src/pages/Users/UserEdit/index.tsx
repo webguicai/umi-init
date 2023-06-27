@@ -5,15 +5,17 @@ import {
   ProFormSelect,
   ProCard,
 } from '@ant-design/pro-components';
-import { message } from 'antd'
+import { message } from 'antd';
 import { history } from '@umijs/max';
 import {
   UsersControllerUserDetail,
   UsersControllerUserEdit,
+  UsersControllerCreateUser,
 } from '@/services/system-interface/yonghujiekou';
 
 export default () => {
-  const { id }: any = history?.location?.state;
+  const { id }: any = history?.location?.state || { id: null };
+  const requestInterface = id ? UsersControllerUserEdit : UsersControllerCreateUser;
   return (
     <PageContainer
       header={{
@@ -29,7 +31,7 @@ export default () => {
             },
             {
               path: '/userEdit',
-              title: '用户编辑',
+              title: id ? '用户编辑' : '新增用户',
             },
           ],
         },
@@ -37,18 +39,22 @@ export default () => {
     >
       <ProCard className="proCardNoPaddingTop">
         <ProForm
-          request={async () => (await UsersControllerUserDetail({ id })).data}
+          request={async () => {
+            if (id) return (await UsersControllerUserDetail({ id })).data;
+            return {};
+          }}
           onFinish={async (values: any) => {
-            const res = await UsersControllerUserEdit({ id, ...values });
+            const req = id ? { id, ...values } : { ...values };
+            const res = await requestInterface(req);
             if (res?.message === '成功') {
-              message.success('修改成功')
+              message.success(id ? '修改成功' : '新增成功');
               setTimeout(() => {
-                history.go(-1)
-              }, 700)
+                history.go(-1);
+              }, 700);
             }
           }}
         >
-          <ProFormText width="md" name="nickName" label="昵称" />
+          <ProFormText width="md" name="userName" label="姓名" disabled={!!id} />
           <ProFormText width="md" name="phone" label="手机号" />
           <ProFormSelect
             width="md"
@@ -69,6 +75,8 @@ export default () => {
               },
             ]}
           />
+          <ProFormText width="md" name="account" label="账号" disabled={!!id} />
+          <ProFormText.Password width="md" name="password" label="密码" />
         </ProForm>
       </ProCard>
     </PageContainer>

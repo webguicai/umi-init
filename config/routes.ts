@@ -1,6 +1,6 @@
 export default [
   { name: '登录', layout: false, path: '/login', component: './Login' },
-  { path: '/welcome', name: '欢迎', component: './Welcome' },
+  // { path: '/welcome', layout: false, name: '欢迎', component: './Welcome' },
   {
     name: '用户管理',
     path: '/users',
@@ -15,7 +15,7 @@ export default [
         name: '用户编辑',
         path: '/users/usersManagement/userEdit',
         component: './Users/UserEdit',
-        hideInMenu: true
+        hideInMenu: true,
       },
     ],
   },

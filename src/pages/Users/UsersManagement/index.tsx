@@ -1,20 +1,33 @@
 import { ProTable, PageContainer } from '@ant-design/pro-components';
-import type { ProColumnType } from '@ant-design/pro-components';
-import { UsersControllerUsersList } from '@/services/system-interface/yonghujiekou';
-import { Button, Popconfirm } from 'antd';
+import type { ProColumnType, ActionType } from '@ant-design/pro-components';
+import {
+  UsersControllerUsersList,
+  UsersControllerDeleteUser,
+} from '@/services/system-interface/yonghujiekou';
+import { Button, Popconfirm, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { history } from '@umijs/max';
+import { useRef } from 'react';
 
 export default () => {
+  const actionRef: { current: ActionType | undefined } = useRef();
+
+  const deleteUser = (id: string) => {
+    UsersControllerDeleteUser({ id })
+      .then((res) => {
+        message.success(res.message);
+        actionRef.current?.reload();
+      })
+      .catch((err) => {
+        message.error(err.message);
+      });
+  };
+
   const columns: ProColumnType<any>[] = [
     {
       dataIndex: 'index',
       valueType: 'index',
       width: 48,
-    },
-    {
-      title: '昵称',
-      dataIndex: 'nickName',
     },
     {
       title: '姓名',
@@ -41,6 +54,10 @@ export default () => {
       },
     },
     {
+      title: '账号',
+      dataIndex: 'account',
+    },
+    {
       title: '操作',
       dataIndex: 'options',
       hideInSearch: true,
@@ -54,7 +71,13 @@ export default () => {
             >
               编辑
             </Button>
-            <Popconfirm title="系统提示" description="是否确认删除">
+            <Popconfirm
+              title="系统提示"
+              description="是否确认删除"
+              onConfirm={() => {
+                deleteUser(record?.id);
+              }}
+            >
               <Button type="link" size="small" style={{ color: '#ff4d4f' }}>
                 删除
               </Button>
@@ -84,12 +107,18 @@ export default () => {
       <ProTable
         columns={columns}
         rowKey="id"
+        actionRef={actionRef}
         request={async (params: API.UsersControllerUsersListParams) => {
           const res = await UsersControllerUsersList(params);
           return res;
         }}
         toolBarRender={() => [
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button
+            key="add"
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => history.push('/users/usersManagement/userEdit')}
+          >
             新增
           </Button>,
         ]}

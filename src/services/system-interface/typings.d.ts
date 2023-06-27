@@ -4,8 +4,16 @@ declare namespace API {
     account: string;
     /** 密码 */
     password: string;
-    /** 验证码 */
-    code: string;
+    /** 用户姓名 */
+    userName: string;
+    /** 电话 */
+    phone: string;
+    /** 性别 */
+    gender: number;
+  };
+
+  type UsersControllerDeleteUserParams = {
+    id: string;
   };
 
   type UsersControllerLoginParams = {
@@ -23,8 +31,6 @@ declare namespace API {
   type UsersControllerUserEditParams = {
     /** id */
     id: string;
-    /** 昵称 */
-    nickName: string;
     /** 手机号 */
     phone: string;
     /** 性别 */
@@ -32,10 +38,12 @@ declare namespace API {
   };
 
   type UsersControllerUsersListParams = {
-    /** 昵称 */
-    nickName?: string;
     /** 手机号 */
     phone?: string;
+    /** 姓名 */
+    userName?: string;
+    /** 性别 */
+    gender?: string;
     /** 当前页数 */
     current: number;
     /** 每页条数 */
