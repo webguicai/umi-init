@@ -22,12 +22,12 @@ export default () => {
         breadcrumb: {
           items: [
             {
-              path: '/users',
-              title: '用户管理',
+              path: '/system',
+              title: '系统管理',
             },
             {
               path: '/usersManagement',
-              title: '用户列表',
+              title: '用户管理',
             },
             {
               path: '/userEdit',
@@ -51,6 +51,8 @@ export default () => {
               setTimeout(() => {
                 history.go(-1);
               }, 700);
+            } else {
+              message.warning(res.message);
             }
           }}
         >

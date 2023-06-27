@@ -25,11 +25,6 @@ export default () => {
 
   const columns: ProColumnType<any>[] = [
     {
-      dataIndex: 'index',
-      valueType: 'index',
-      width: 48,
-    },
-    {
       title: '姓名',
       dataIndex: 'userName',
     },
@@ -67,7 +62,7 @@ export default () => {
             <Button
               type="link"
               size="small"
-              onClick={() => history.push('/users/usersManagement/userEdit', { id: record.id })}
+              onClick={() => history.push('/system/usersManagement/userEdit', { id: record.id })}
             >
               编辑
             </Button>
@@ -93,12 +88,12 @@ export default () => {
         breadcrumb: {
           items: [
             {
-              path: '/users',
-              title: '用户管理',
+              path: '/system',
+              title: '系统管理',
             },
             {
               path: '/usersManagement',
-              title: '用户列表',
+              title: '用户管理',
             },
           ],
         },
@@ -117,7 +112,7 @@ export default () => {
             key="add"
             type="primary"
             icon={<PlusOutlined />}
-            onClick={() => history.push('/users/usersManagement/userEdit')}
+            onClick={() => history.push('/system/usersManagement/userEdit')}
           >
             新增
           </Button>,

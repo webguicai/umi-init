@@ -1,20 +1,31 @@
 export default [
   { name: '登录', layout: false, path: '/login', component: './Login' },
-  // { path: '/welcome', layout: false, name: '欢迎', component: './Welcome' },
+  { path: '/welcome', name: '欢迎', component: './Welcome' },
   {
-    name: '用户管理',
-    path: '/users',
+    name: '系统管理',
+    path: '/system',
     routes: [
-      { path: '/users', redirect: '/users/usersManagement' },
+      { path: '/system', redirect: '/system/usersManagement' },
       {
-        name: '用户列表',
-        path: '/users/usersManagement',
-        component: './Users/UsersManagement',
+        name: '用户管理',
+        path: '/system/usersManagement',
+        component: './System/UsersManagement',
       },
       {
         name: '用户编辑',
-        path: '/users/usersManagement/userEdit',
-        component: './Users/UserEdit',
+        path: '/system/usersManagement/userEdit',
+        component: './System/UsersManagement/UserEdit',
+        hideInMenu: true,
+      },
+      {
+        name: '菜单管理',
+        path: '/system/menusManagement',
+        component: './System/MenusManagement',
+      },
+      {
+        name: '菜单编辑',
+        path: '/system/menusManagement/menuEdit',
+        component: './System/MenusManagement/MenuEdit',
         hideInMenu: true,
       },
     ],
