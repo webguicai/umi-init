@@ -1,6 +1,6 @@
 export default [
   { name: '登录', layout: false, path: '/login', component: './Login' },
-  // { path: '/welcome', layout: false, name: '欢迎', component: './Welcome' },
+  { path: '/welcome', name: '欢迎', component: './Welcome' },
   {
     name: '用户管理',
     path: '/users',
